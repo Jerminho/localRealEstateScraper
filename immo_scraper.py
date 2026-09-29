@@ -25,16 +25,16 @@ def scrape_zimmo():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
 
-    print("🚀 Scraper gestart voor regio Moeskroen - Kortrijk - Waregem...")
+    print(" Scraper gestart voor regio Moeskroen - Kortrijk - Waregem...")
 
     for postcode, region_name in REGIONS.items():
-        print(f"🔍 Zoeken in {postcode} ({region_name})...")
+        print(f" Zoeken in {postcode} ({region_name})...")
         url = f"https://zimmo.be{postcode}/te-koop/panden/"
         
         try:
             response = requests.get(url, headers=headers, timeout=10)
             if response.status_code != 200:
-                print(f"⚠️ Kon {postcode} niet laden (Status: {response.status_code})")
+                print(f" Kon {postcode} niet laden (Status: {response.status_code})")
                 continue
                 
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -68,7 +68,7 @@ def scrape_zimmo():
             time.sleep(2) # Voorkom IP-blokkades
             
         except Exception as e:
-            print(f"❌ Fout in {postcode}: {e}")
+            print(f" Fout in {postcode}: {e}")
             
     return leads
 
@@ -99,7 +99,7 @@ def generate_dashboard(leads):
     </head>
     <body>
         <div class="container">
-            <h1>🎯 Potentiële Schoonmaak & Onderhoudsklussen</h1>
+            <h1> Potentiële Schoonmaak & Onderhoudsklussen</h1>
             <div class="stats">Aantal leads gevonden: {len(leads)}</div>
     """
     
@@ -133,7 +133,7 @@ def generate_dashboard(leads):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html_content)
         
-    print(f"\n✨ Dashboard succesvol gegenereerd! Openen van {file_path}...")
+    print(f"\n Dashboard succesvol gegenereerd! Openen van {file_path}...")
     webbrowser.open('file://' + os.path.realpath(file_path))
 
 if __name__ == "__main__":
